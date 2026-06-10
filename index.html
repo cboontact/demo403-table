@@ -36,17 +36,17 @@
     }
 
     header {
-      background: var(--dark);
+      background: linear-gradient(135deg, #b45309 0%, #d97706 45%, #f59e0b 80%, #fbbf24 100%);
       color: #fff;
       padding: 36px 60px;
-      border-bottom: 4px solid var(--accent);
+      border-bottom: 4px solid #92400e;
       display: flex;
       align-items: center;
       gap: 20px;
     }
     header .icon { font-size: 36px; }
-    header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
-    header p  { font-size: 13px; color: #8899bb; }
+    header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; text-shadow: 0 1px 3px rgba(0,0,0,0.25); }
+    header p  { font-size: 13px; color: #fef3c7; }
 
     main {
       max-width: 880px;
@@ -125,7 +125,7 @@
       position: absolute;
       top: 10px; right: 12px;
       background: #eef3fb;
-      color: #718096;
+      color: #2060c0;
       font-size: 11px;
       font-family: 'Sarabun', sans-serif;
       padding: 2px 10px;
@@ -150,7 +150,7 @@
     }
     table.attr-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
     table.attr-table tr:last-child td { border-bottom: none; }
-    table.attr-table tr:hover td { background: #f7faff; }
+    table.attr-table tr:hover td { background: #f7f9ff; }
 
     code {
       background: #eef3fb;
@@ -163,7 +163,7 @@
 
     .note {
       background: #fffbea;
-      border-left: 4px solid #f0c040;
+      border-left: 4px solid #d97706;
       border-radius: 6px;
       padding: 12px 16px;
       font-size: 13.5px;
@@ -171,8 +171,8 @@
     }
 
     .note.info {
-      background: #f0f7ff;
-      border-left-color: #3a7bd5;
+      background: #fff8ed;
+      border-left-color: #f59e0b;
     }
 
     /* preview table */
@@ -202,7 +202,7 @@
     }
     .preview-area table td {
       padding: 8px 16px;
-      border: 1px solid #ddd;
+      border: 1px solid #dde3ef;
       vertical-align: middle;
     }
     .preview-area table tr:nth-child(even) td { background: #f4f6fb; }
@@ -218,7 +218,7 @@
       display: flex;
       align-items: center;
       gap: 8px;
-      background: #f0f4ff;
+      background: #eef3fb;
       border-radius: 8px;
       padding: 8px 14px;
       font-size: 13px;
