@@ -1,1 +1,595 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>README — ตารางข้อมูลและไอคอน Social</title>
+  <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --surface: #ffffff;
+      --dark: #1a2535;
+      --accent: #3a7bd5;
+      --accent2: #00c6a2;
+      --border: #e2e8f0;
+      --code-bg: #f8f9fc;
+      --code-fg: #2d3748;
+      --comment: #718096;
+      --selector: #2b6cb0;
+      --prop: #c05621;
+      --val: #276749;
+      --tag: #2b6cb0;
+      --attr: #c05621;
+      --str: #276749;
+      --fill: #fff3cd;
+      --radius: 10px;
+    }
 
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Sarabun', sans-serif;
+      background: var(--bg);
+      color: var(--dark);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    header {
+      background: var(--dark);
+      color: #fff;
+      padding: 36px 60px;
+      border-bottom: 4px solid var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    header .icon { font-size: 36px; }
+    header h1 { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+    header p  { font-size: 13px; color: #8899bb; }
+
+    main {
+      max-width: 880px;
+      margin: 36px auto;
+      padding: 0 24px 60px;
+      display: flex;
+      flex-direction: column;
+      gap: 28px;
+    }
+
+    .section {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 28px 32px;
+      box-shadow: 0 2px 10px rgba(0,0,0,.06);
+    }
+
+    .section-title {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--dark);
+      border-left: 4px solid var(--accent);
+      padding-left: 12px;
+      margin-bottom: 18px;
+    }
+
+    .section-title.green { border-color: var(--accent2); }
+
+    .code-wrap { position: relative; margin-bottom: 16px; }
+
+    .code-block {
+      background: var(--code-bg);
+      color: var(--code-fg);
+      border-radius: 8px;
+      border: 1px solid #dde3ef;
+      padding: 18px 20px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      line-height: 1.85;
+      overflow-x: auto;
+      user-select: none;
+      -webkit-user-select: none;
+      -moz-user-select: none;
+    }
+
+    .code-block .cm  { color: var(--comment); }
+    .code-block .sl  { color: var(--selector); }
+    .code-block .pr  { color: var(--prop); }
+    .code-block .vl  { color: var(--val); }
+    .code-block .tg  { color: var(--tag); }
+    .code-block .at  { color: var(--attr); }
+    .code-block .st  { color: var(--str); }
+    .code-block .hl  { background: #fff8cc; border-radius: 3px; padding: 0 3px; }
+
+    .code-block input.fill {
+      background: var(--fill);
+      border: none;
+      border-bottom: 2px dashed #d4a017;
+      border-radius: 3px;
+      font-family: 'Courier New', monospace;
+      font-size: 13px;
+      color: #333;
+      padding: 0 4px;
+      width: var(--w, 120px);
+      user-select: text;
+      -webkit-user-select: text;
+      outline: none;
+      cursor: text;
+    }
+    .code-block input.fill:focus {
+      background: #ffeaa7;
+      border-bottom-color: #c07000;
+    }
+
+    .no-copy-badge {
+      position: absolute;
+      top: 10px; right: 12px;
+      background: #eef3fb;
+      color: #718096;
+      font-size: 11px;
+      font-family: 'Sarabun', sans-serif;
+      padding: 2px 10px;
+      border-radius: 20px;
+      border: 1px solid #dde3ef;
+      pointer-events: none;
+      z-index: 2;
+    }
+
+    table.attr-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+      margin-top: 8px;
+    }
+    table.attr-table th {
+      background: #eef3fb;
+      color: var(--dark);
+      text-align: left;
+      padding: 10px 14px;
+      font-weight: 700;
+    }
+    table.attr-table td { padding: 9px 14px; border-bottom: 1px solid var(--border); vertical-align: top; }
+    table.attr-table tr:last-child td { border-bottom: none; }
+    table.attr-table tr:hover td { background: #f7faff; }
+
+    code {
+      background: #eef3fb;
+      color: #2060c0;
+      border-radius: 4px;
+      padding: 1px 7px;
+      font-size: 12.5px;
+      font-family: 'Courier New', monospace;
+    }
+
+    .note {
+      background: #fffbea;
+      border-left: 4px solid #f0c040;
+      border-radius: 6px;
+      padding: 12px 16px;
+      font-size: 13.5px;
+      margin-top: 14px;
+    }
+
+    .note.info {
+      background: #f0f7ff;
+      border-left-color: #3a7bd5;
+    }
+
+    /* preview table */
+    .preview-area {
+      background: #f7f9ff;
+      border: 2px dashed #c0d0f0;
+      border-radius: 8px;
+      padding: 20px;
+      overflow-x: auto;
+    }
+
+    .preview-area table {
+      border-collapse: collapse;
+      font-family: 'Sarabun', sans-serif;
+      font-size: 14px;
+    }
+    .preview-area table caption {
+      font-weight: 700;
+      font-size: 16px;
+      margin-bottom: 8px;
+      color: var(--dark);
+    }
+    .preview-area table th {
+      background: #1a2535;
+      color: #fff;
+      padding: 10px 16px;
+    }
+    .preview-area table td {
+      padding: 8px 16px;
+      border: 1px solid #ddd;
+      vertical-align: middle;
+    }
+    .preview-area table tr:nth-child(even) td { background: #f4f6fb; }
+
+    /* icon demo */
+    .icon-demo {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 14px;
+    }
+    .icon-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: #f0f4ff;
+      border-radius: 8px;
+      padding: 8px 14px;
+      font-size: 13px;
+    }
+    .icon-chip i { font-size: 22px; }
+    .icon-chip .fb { color: #1877f2; }
+    .icon-chip .ig { color: #e1306c; }
+    .icon-chip .yt { color: #ff0000; }
+    .icon-chip .tw { color: #1da1f2; }
+    .icon-chip .tt { color: #010101; }
+    .icon-chip .ln { color: #0a66c2; }
+
+    /* structure diagram */
+    .struct-diagram {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 14px;
+    }
+    .struct-box {
+      border: 2px solid var(--accent);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 13px;
+    }
+    .struct-box h4 {
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+    .struct-box p { color: #556; line-height: 1.7; }
+
+    /* legend */
+    .ex-legend {
+      display: flex;
+      gap: 20px;
+      font-size: 13px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
+    }
+    .ex-legend span { display: flex; align-items: center; gap: 6px; }
+    .dot-fill {
+      display: inline-block;
+      width: 28px; height: 16px;
+      background: var(--fill);
+      border-bottom: 2px dashed #e0a000;
+      border-radius: 3px;
+    }
+
+    footer {
+      text-align: center;
+      font-size: 12px;
+      color: #aaa;
+      padding-bottom: 20px;
+    }
+  </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+
+<header>
+  <div class="icon">📋</div>
+  <div>
+    <h1>README — ตารางข้อมูลและไอคอน Social Media</h1>
+    <p>วิชาการพัฒนาเว็บแอพสมัยใหม่ &nbsp;|&nbsp; โรงเรียนจอมทอง &nbsp;|&nbsp; หัวข้อ: HTML Table &amp; Font Awesome</p>
+  </div>
+</header>
+
+<main>
+
+  <!-- 1. ภาพรวม -->
+  <div class="section">
+    <div class="section-title">1. ภาพรวม</div>
+    <p>โค้ดนี้สร้าง <strong>ตารางแสดงข้อมูลเพื่อน 5 คน</strong> ที่มีรูปภาพและปุ่มลิงค์ Social Media แบ่งเป็น 2 ส่วนหลัก:</p>
+    <div class="struct-diagram" style="margin-top: 14px;">
+      <div class="struct-box">
+        <h4>&lt;head&gt;</h4>
+        <p>โหลด Font Awesome ผ่าน CDN เพื่อใช้ไอคอน Social Media ในหน้าเว็บ</p>
+      </div>
+      <div class="struct-box">
+        <h4>&lt;body&gt;</h4>
+        <p>โค้ด &lt;table&gt; ที่มีหัวตาราง, แถวข้อมูล, รูปภาพ และปุ่มลิงค์ Social</p>
+      </div>
+    </div>
+    <div class="note info" style="margin-top: 16px;">
+      💡 <strong>Font Awesome</strong> คือ library ไอคอนฟรี — โหลดครั้งเดียวใน &lt;head&gt; แล้วใช้ได้ทุกที่ในหน้าเว็บผ่านแท็ก <code>&lt;i class="fa-brands fa-facebook"&gt;</code>
+    </div>
+  </div>
+
+  <!-- 2. head -->
+  <div class="section">
+    <div class="section-title">2. &lt;head&gt; — โหลด Font Awesome</div>
+    <div class="code-wrap">
+      <div class="no-copy-badge">🔒 no copy</div>
+      <div class="code-block" oncontextmenu="return false">
+&lt;<span class="tg">head</span>&gt;<br>
+&nbsp;&nbsp;<span class="cm">&lt;!-- base target ทำให้ลิงค์ทุกตัวเปิดแท็บใหม่ --&gt;</span><br>
+&nbsp;&nbsp;&lt;<span class="tg">base</span> <span class="at">target</span>=<span class="st">"_top"</span>&gt;<br>
+<br>
+&nbsp;&nbsp;<span class="cm">&lt;!-- โหลด Font Awesome จาก CDN --&gt;</span><br>
+&nbsp;&nbsp;&lt;<span class="tg">link</span> <span class="at">rel</span>=<span class="st">"stylesheet"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="at">href</span>=<span class="st">"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"</span>&gt;<br>
+&lt;/<span class="tg">head</span>&gt;
+      </div>
+    </div>
+    <table class="attr-table">
+      <tr><th>แท็ก / Attribute</th><th>หน้าที่</th></tr>
+      <tr><td><code>&lt;base target="_top"&gt;</code></td><td>กำหนดให้ลิงค์ทุกตัวในหน้าเปิดในแท็บหลัก (ใช้เมื่อรันใน iframe เช่น Google Sites)</td></tr>
+      <tr><td><code>&lt;link rel="stylesheet"&gt;</code></td><td>โหลดไฟล์ CSS จากภายนอก — ในที่นี้คือ Font Awesome icon library</td></tr>
+      <tr><td><code>href="https://cdnjs..."</code></td><td>URL ของไฟล์ Font Awesome บน CDN (Content Delivery Network) ไม่ต้องดาวน์โหลดเก็บเอง</td></tr>
+    </table>
+  </div>
+
+  <!-- 3. โครงสร้างตาราง -->
+  <div class="section">
+    <div class="section-title">3. โครงสร้าง &lt;table&gt;</div>
+    <div class="code-wrap">
+      <div class="no-copy-badge">🔒 no copy</div>
+      <div class="code-block" oncontextmenu="return false">
+&lt;<span class="tg">table</span> <span class="at">border</span>=<span class="st">"1"</span> <span class="at">style</span>=<span class="st">"border-collapse: collapse;"</span>&gt;<br>
+<br>
+&nbsp;&nbsp;<span class="cm">&lt;!-- ชื่อตาราง --&gt;</span><br>
+&nbsp;&nbsp;&lt;<span class="tg">caption</span>&gt;5 อันดับ เพื่อนของฉัน&lt;/<span class="tg">caption</span>&gt;<br>
+<br>
+&nbsp;&nbsp;<span class="cm">&lt;!-- แถวหัวตาราง --&gt;</span><br>
+&nbsp;&nbsp;&lt;<span class="tg">tr</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">th</span>&gt;ลำดับ&lt;/<span class="tg">th</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">th</span>&gt;ชื่อ - นามสกุล&lt;/<span class="tg">th</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">... (th อื่นๆ)</span><br>
+&nbsp;&nbsp;&lt;/<span class="tg">tr</span>&gt;<br>
+<br>
+&nbsp;&nbsp;<span class="cm">&lt;!-- แถวข้อมูล (ทำซ้ำสำหรับแต่ละคน) --&gt;</span><br>
+&nbsp;&nbsp;&lt;<span class="tg">tr</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">td</span>&gt;1&lt;/<span class="tg">td</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">td</span>&gt;นายวุฒิกร คำแก้ว&lt;/<span class="tg">td</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="cm">... (td อื่นๆ)</span><br>
+&nbsp;&nbsp;&lt;/<span class="tg">tr</span>&gt;<br>
+<br>
+&lt;/<span class="tg">table</span>&gt;
+      </div>
+    </div>
+    <table class="attr-table">
+      <tr><th>แท็ก / Attribute</th><th>หน้าที่</th></tr>
+      <tr><td><code>&lt;table border="1"&gt;</code></td><td>สร้างตาราง — <code>border="1"</code> ทำให้มีเส้นขอบ</td></tr>
+      <tr><td><code>border-collapse: collapse</code></td><td>รวมเส้นขอบของเซลล์ติดกันให้เป็นเส้นเดียว (ป้องกันเส้นซ้อน)</td></tr>
+      <tr><td><code>&lt;caption&gt;</code></td><td>ชื่อ/หัวข้อของตาราง แสดงอยู่ด้านบน</td></tr>
+      <tr><td><code>&lt;tr&gt;</code></td><td>Table Row — หนึ่งแถวในตาราง</td></tr>
+      <tr><td><code>&lt;th&gt;</code></td><td>Table Header — หัวคอลัมน์ ข้อความจะเป็น <strong>ตัวหนา</strong> และอยู่กึ่งกลางโดยอัตโนมัติ</td></tr>
+      <tr><td><code>&lt;td&gt;</code></td><td>Table Data — เซลล์ข้อมูลปกติ</td></tr>
+    </table>
+  </div>
+
+  <!-- 4. รูปภาพใน td -->
+  <div class="section">
+    <div class="section-title">4. คอลัมน์รูปภาพ — &lt;img&gt; ใน &lt;td&gt;</div>
+    <div class="code-wrap">
+      <div class="no-copy-badge">🔒 no copy</div>
+      <div class="code-block" oncontextmenu="return false">
+&lt;<span class="tg">td</span>&gt;<br>
+&nbsp;&nbsp;&lt;<span class="tg">img</span> <span class="at">src</span>=<span class="st">"https://drive.google.com/thumbnail?id=1qbIbz0Gx1ez...&amp;sz=w1000"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="at">alt</span>=<span class="st">"google logo"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="at">style</span>=<span class="st">"width: 100px; height: auto"</span>&gt;<br>
+&lt;/<span class="tg">td</span>&gt;
+      </div>
+    </div>
+    <table class="attr-table">
+      <tr><th>Attribute</th><th>ค่า</th><th>หมายความว่า</th></tr>
+      <tr><td><code>src="..."</code></td><td>URL รูปภาพ</td><td>ที่มาของรูป — ใช้ Google Drive thumbnail URL ได้</td></tr>
+      <tr><td><code>alt="..."</code></td><td>ข้อความสำรอง</td><td>ข้อความที่แสดงเมื่อรูปโหลดไม่ได้ และช่วย Accessibility</td></tr>
+      <tr><td><code>width: 100px</code></td><td>100px</td><td>กำหนดความกว้างรูป 100 พิกเซล</td></tr>
+      <tr><td><code>height: auto</code></td><td>auto</td><td>ความสูงปรับตามสัดส่วนอัตโนมัติ ไม่บิดเบี้ยว</td></tr>
+    </table>
+    <div class="note">
+      💡 <strong>Google Drive Thumbnail URL:</strong> ใช้รูปแบบ <code>https://drive.google.com/thumbnail?id=FILE_ID&sz=w1000</code> โดย <code>FILE_ID</code> คือ ID ที่อยู่ใน URL ของไฟล์รูปใน Google Drive
+    </div>
+  </div>
+
+  <!-- 5. Font Awesome Icon -->
+  <div class="section">
+    <div class="section-title">5. ไอคอน Social — Font Awesome</div>
+    <div class="code-wrap">
+      <div class="no-copy-badge">🔒 no copy</div>
+      <div class="code-block" oncontextmenu="return false">
+&lt;<span class="tg">td</span>&gt;<br>
+&nbsp;&nbsp;<span class="cm">&lt;!-- ไอคอน Facebook พร้อมลิงค์ --&gt;</span><br>
+&nbsp;&nbsp;&lt;<span class="tg">a</span> <span class="at">href</span>=<span class="st">"https://www.facebook.com/nuy.lodtongsri"</span> <span class="at">target</span>=<span class="st">"_blank"</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">i</span> <span class="at">class</span>=<span class="st">"fa-brands fa-facebook"</span> <span class="at">style</span>=<span class="st">"font-size: 30px;"</span>&gt;&lt;/<span class="tg">i</span>&gt;<br>
+&nbsp;&nbsp;&lt;/<span class="tg">a</span>&gt;<br>
+<br>
+&nbsp;&nbsp;<span class="cm">&lt;!-- ไอคอน Instagram พร้อมลิงค์ --&gt;</span><br>
+&nbsp;&nbsp;&lt;<span class="tg">a</span> <span class="at">href</span>=<span class="st">"https://www.instagram.com/"</span> <span class="at">target</span>=<span class="st">"_blank"</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">i</span> <span class="at">class</span>=<span class="st">"fa-brands fa-instagram"</span> <span class="at">style</span>=<span class="st">"font-size: 30px;"</span>&gt;&lt;/<span class="tg">i</span>&gt;<br>
+&nbsp;&nbsp;&lt;/<span class="tg">a</span>&gt;<br>
+&lt;/<span class="tg">td</span>&gt;
+      </div>
+    </div>
+    <table class="attr-table">
+      <tr><th>Class / Attribute</th><th>หน้าที่</th></tr>
+      <tr><td><code>fa-brands</code></td><td>บอกว่าเป็นไอคอน <em>แบรนด์/โลโก้</em> เช่น Facebook, YouTube (ต้องมีทุกครั้ง)</td></tr>
+      <tr><td><code>fa-facebook</code></td><td>ชื่อไอคอน — เปลี่ยนส่วนนี้เพื่อเลือกไอคอนอื่น</td></tr>
+      <tr><td><code>font-size: 30px</code></td><td>ขนาดของไอคอน — ปรับตัวเลขได้ตามต้องการ</td></tr>
+      <tr><td><code>target="_blank"</code></td><td>เปิดลิงค์ในแท็บใหม่</td></tr>
+    </table>
+
+    <p style="margin-top: 18px; font-weight: 700; font-size: 14px;">ตัวอย่างไอคอน Social ที่ใช้บ่อย:</p>
+    <div class="icon-demo">
+      <div class="icon-chip"><i class="fa-brands fa-facebook fb"></i> <code>fa-facebook</code></div>
+      <div class="icon-chip"><i class="fa-brands fa-instagram ig"></i> <code>fa-instagram</code></div>
+      <div class="icon-chip"><i class="fa-brands fa-youtube yt"></i> <code>fa-youtube</code></div>
+      <div class="icon-chip"><i class="fa-brands fa-x-twitter tw"></i> <code>fa-x-twitter</code></div>
+      <div class="icon-chip"><i class="fa-brands fa-tiktok tt"></i> <code>fa-tiktok</code></div>
+      <div class="icon-chip"><i class="fa-brands fa-linkedin ln"></i> <code>fa-linkedin</code></div>
+    </div>
+    <div class="note">
+      🔍 ค้นหาชื่อไอคอนเพิ่มเติมได้ที่ <strong>fontawesome.com/icons</strong> — กรองด้วย "Brands" เพื่อดูเฉพาะไอคอนแบรนด์ทั้งหมด
+    </div>
+  </div>
+
+  <!-- 6. ความแตกต่าง th vs td -->
+  <div class="section">
+    <div class="section-title">6. ความแตกต่าง &lt;th&gt; กับ &lt;td&gt;</div>
+    <div class="preview-area">
+      <table border="1" style="border-collapse:collapse; width: 100%;">
+        <tr>
+          <th style="padding:8px 16px;">ลำดับ</th>
+          <th style="padding:8px 16px;">ชื่อ - นามสกุล</th>
+          <th style="padding:8px 16px;">ชื่อเล่น</th>
+        </tr>
+        <tr>
+          <td style="padding:8px 16px;">1</td>
+          <td style="padding:8px 16px;">นายวุฒิกร คำแก้ว</td>
+          <td style="padding:8px 16px;">บอย</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 16px;">2</td>
+          <td style="padding:8px 16px;">นางสาววิชชุดา กันทะมาลา</td>
+          <td style="padding:8px 16px;">วิชชี่</td>
+        </tr>
+      </table>
+    </div>
+    <table class="attr-table" style="margin-top: 14px;">
+      <tr><th>แท็ก</th><th>ลักษณะ</th><th>ใช้ตอนไหน</th></tr>
+      <tr><td><code>&lt;th&gt;</code></td><td>ตัวหนา + จัดกึ่งกลาง (โดย browser อัตโนมัติ)</td><td>แถวหัวตาราง — บอกว่าคอลัมน์นั้นเก็บข้อมูลอะไร</td></tr>
+      <tr><td><code>&lt;td&gt;</code></td><td>ข้อความปกติ + ชิดซ้าย</td><td>ข้อมูลทั่วไปในแต่ละแถว</td></tr>
+    </table>
+  </div>
+
+  <!-- 7. Preview ผลลัพธ์ -->
+  <div class="section">
+    <div class="section-title">7. ตัวอย่างผลลัพธ์ (Preview)</div>
+    <div class="preview-area">
+      <table border="1" style="border-collapse: collapse; width: 100%;">
+        <caption style="font-weight:700; font-size:15px; margin-bottom:10px; color:#1a2535;">5 อันดับ เพื่อนของฉัน</caption>
+        <tr>
+          <th style="padding:10px 14px; background:#1a2535; color:#fff;">ลำดับ</th>
+          <th style="padding:10px 14px; background:#1a2535; color:#fff;">ชื่อ - นามสกุล</th>
+          <th style="padding:10px 14px; background:#1a2535; color:#fff;">ชื่อเล่น</th>
+          <th style="padding:10px 14px; background:#1a2535; color:#fff;">อาหารที่ชอบ</th>
+          <th style="padding:10px 14px; background:#1a2535; color:#fff;">รูปเพื่อน</th>
+          <th style="padding:10px 14px; background:#1a2535; color:#fff;">Social</th>
+        </tr>
+        <tr>
+          <td style="padding:8px 14px; text-align:center;">1</td>
+          <td style="padding:8px 14px;">นายวุฒิกร คำแก้ว</td>
+          <td style="padding:8px 14px;">บอย</td>
+          <td style="padding:8px 14px;">ผัดไทย</td>
+          <td style="padding:8px 14px; text-align:center;">
+            <img src="https://drive.google.com/thumbnail?id=1qbIbz0Gx1ezYAAUAKKh_gTkr0BWnUlfy&sz=w1000" alt="รูปบอย" style="width:80px; height:auto; border-radius:6px;">
+          </td>
+          <td style="padding:8px 14px; text-align:center;">
+            <a href="https://www.facebook.com/" target="_blank" style="margin-right:8px;">
+              <i class="fa-brands fa-facebook" style="font-size:28px; color:#1877f2;"></i>
+            </a>
+            <a href="https://www.instagram.com/" target="_blank">
+              <i class="fa-brands fa-instagram" style="font-size:28px; color:#e1306c;"></i>
+            </a>
+          </td>
+        </tr>
+        <tr style="background:#f4f6fb;">
+          <td style="padding:8px 14px; text-align:center;">2</td>
+          <td style="padding:8px 14px;">นางสาววิชชุดา กันทะมาลา</td>
+          <td style="padding:8px 14px;">วิชชี่</td>
+          <td style="padding:8px 14px;">ข้าวมันไก่</td>
+          <td style="padding:8px 14px; text-align:center; color:#aaa;">......</td>
+          <td style="padding:8px 14px; text-align:center; color:#aaa;">......</td>
+        </tr>
+        <tr>
+          <td style="padding:8px 14px; text-align:center;">3</td>
+          <td style="padding:8px 14px;">นางสาวนิตติญา ลอดทองสี</td>
+          <td style="padding:8px 14px;">นุ้ย</td>
+          <td style="padding:8px 14px;">แกงปลา</td>
+          <td style="padding:8px 14px; text-align:center; color:#aaa;">......</td>
+          <td style="padding:8px 14px; text-align:center; color:#aaa;">......</td>
+        </tr>
+      </table>
+    </div>
+    <div class="note">💡 แถวที่ 2-5 ยังมี <code>......</code> อยู่ — นักเรียนต้องเพิ่มรูปและลิงค์ Social ให้ครบเองในแบบฝึกหัด</div>
+  </div>
+
+  <!-- 8. แบบฝึกหัด -->
+  <div class="section">
+    <div class="section-title green">8. แบบฝึกหัด — เติมข้อมูลเพื่อนของตัวเอง</div>
+    <p style="font-size:14px; margin-bottom:14px; color:#445;">เติมช่องสีเหลืองในส่วน &lt;body&gt; — เปลี่ยนข้อมูลให้เป็นเพื่อนของตัวเอง 5 คน พร้อมรูปและลิงค์ Social</p>
+    <div class="ex-legend">
+      <span><span class="dot-fill"></span> ช่องที่ต้องพิมพ์เอง</span>
+    </div>
+
+    <div class="code-wrap">
+      <div class="no-copy-badge">🔒 no copy</div>
+      <div class="code-block" oncontextmenu="return false">
+&lt;!DOCTYPE html&gt;<br>
+&lt;<span class="tg">html</span>&gt;<br>
+&lt;<span class="tg">head</span>&gt;<br>
+&nbsp;&nbsp;&lt;<span class="tg">base</span> <span class="at">target</span>=<span class="st">"_top"</span>&gt;<br>
+&nbsp;&nbsp;&lt;<span class="tg">link</span> <span class="at">rel</span>=<span class="st">"stylesheet"</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="at">href</span>=<span class="st">"https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"</span>&gt;<br>
+&lt;/<span class="tg">head</span>&gt;<br>
+&lt;<span class="tg">body</span>&gt;<br>
+<br>
+&lt;<span class="tg">table</span> <span class="at">border</span>=<span class="st">"1"</span> <span class="at">style</span>=<span class="st">"border-collapse: collapse;"</span>&gt;<br>
+&nbsp;&nbsp;<span class="cm">&lt;!-- เปลี่ยนชื่อตาราง --&gt;</span><br>
+&nbsp;&nbsp;&lt;<span class="tg">caption</span>&gt;<input class="fill" style="--w:200px" placeholder="ชื่อตารางของคุณ">&lt;/<span class="tg">caption</span>&gt;<br>
+<br>
+&nbsp;&nbsp;<span class="cm">&lt;!-- หัวตาราง (ไม่ต้องเปลี่ยน) --&gt;</span><br>
+&nbsp;&nbsp;&lt;<span class="tg">tr</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">th</span>&gt;ลำดับ&lt;/<span class="tg">th</span>&gt;&lt;<span class="tg">th</span>&gt;ชื่อ - นามสกุล&lt;/<span class="tg">th</span>&gt;&lt;<span class="tg">th</span>&gt;ชื่อเล่น&lt;/<span class="tg">th</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">th</span>&gt;อาหารที่ชอบ&lt;/<span class="tg">th</span>&gt;&lt;<span class="tg">th</span>&gt;รูปเพื่อน&lt;/<span class="tg">th</span>&gt;&lt;<span class="tg">th</span>&gt;Social&lt;/<span class="tg">th</span>&gt;<br>
+&nbsp;&nbsp;&lt;/<span class="tg">tr</span>&gt;<br>
+<br>
+&nbsp;&nbsp;<span class="cm">&lt;!-- แถวที่ 1 --&gt;</span><br>
+&nbsp;&nbsp;&lt;<span class="tg">tr</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">td</span>&gt;1&lt;/<span class="tg">td</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">td</span>&gt;<input class="fill" style="--w:180px" placeholder="ชื่อ-นามสกุล เพื่อนคนที่ 1">&lt;/<span class="tg">td</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">td</span>&gt;<input class="fill" style="--w:80px" placeholder="ชื่อเล่น">&lt;/<span class="tg">td</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">td</span>&gt;<input class="fill" style="--w:110px" placeholder="อาหารที่ชอบ">&lt;/<span class="tg">td</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">td</span>&gt;&lt;<span class="tg">img</span> <span class="at">src</span>=<span class="st">"<input class="fill" style="--w:180px" placeholder="URL รูปภาพ">"</span> <span class="at">alt</span>=<span class="st">"<input class="fill" style="--w:80px" placeholder="ชื่อรูป">"</span> <span class="at">style</span>=<span class="st">"width:100px;height:auto"</span>&gt;&lt;/<span class="tg">td</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">td</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">a</span> <span class="at">href</span>=<span class="st">"<input class="fill" style="--w:160px" placeholder="URL Facebook เพื่อนคนที่ 1">"</span> <span class="at">target</span>=<span class="st">"_blank"</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">i</span> <span class="at">class</span>=<span class="st">"fa-brands fa-facebook"</span> <span class="at">style</span>=<span class="st">"font-size:30px;"</span>&gt;&lt;/<span class="tg">i</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="tg">a</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">a</span> <span class="at">href</span>=<span class="st">"<input class="fill" style="--w:160px" placeholder="URL Instagram เพื่อนคนที่ 1">"</span> <span class="at">target</span>=<span class="st">"_blank"</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;<span class="tg">i</span> <span class="at">class</span>=<span class="st">"fa-brands fa-instagram"</span> <span class="at">style</span>=<span class="st">"font-size:30px;"</span>&gt;&lt;/<span class="tg">i</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="tg">a</span>&gt;<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&lt;/<span class="tg">td</span>&gt;<br>
+&nbsp;&nbsp;&lt;/<span class="tg">tr</span>&gt;<br>
+<br>
+&nbsp;&nbsp;<span class="cm">&lt;!-- ทำซ้ำแถว &lt;tr&gt; ... &lt;/tr&gt; สำหรับเพื่อนคนที่ 2–5 --&gt;</span><br>
+<br>
+&lt;/<span class="tg">table</span>&gt;<br>
+&lt;/<span class="tg">body</span>&gt;<br>
+&lt;/<span class="tg">html</span>&gt;
+      </div>
+    </div>
+    <div class="note">
+      ✏️ <strong>คำแนะนำ:</strong> แถวข้อมูลมีโครงสร้างเหมือนกันทุกแถว — ทำแถวที่ 1 ให้สมบูรณ์ก่อน แล้วจึง Copy ทั้ง &lt;tr&gt;...&lt;/tr&gt; ไปวางซ้ำแล้วแก้ไขข้อมูลในแต่ละแถว
+    </div>
+  </div>
+
+</main>
+
+<footer>เอกสารประกอบการเรียน — วิชาการพัฒนาเว็บแอพสมัยใหม่ โรงเรียนจอมทอง</footer>
+
+<script>
+  document.querySelectorAll('.code-block').forEach(function(block) {
+    block.addEventListener('keydown', function(e) {
+      if ((e.ctrlKey || e.metaKey) && e.key === 'c') { e.preventDefault(); }
+    });
+    block.addEventListener('dragstart', function(e) { e.preventDefault(); });
+  });
+</script>
+
+</body>
+</html>
